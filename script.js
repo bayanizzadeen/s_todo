@@ -8,6 +8,7 @@ let tasks = JSON.parse(localStorage.getItem('tasks')) || []
 
 // Render the old tasks from the localStorage 
 const renderTasks = (tasks)=>{
+    const taskInputEle = document.querySelector('#task')
     tasks.map(task => {
         
     // create the Task Elements
@@ -18,11 +19,11 @@ const renderTasks = (tasks)=>{
     newTaskPargraph.innerHTML = task.task
 
     const newTaskEditButton = document.createElement('button')
-    newTaskEditButton.classList = 'edit-btn'
+    newTaskEditButton.classList = 'edit-btn  btns-edit-styling'
     newTaskEditButton.innerHTML = 'Edit'
 
     const newTaskRemoveButton = document.createElement('button')
-    newTaskRemoveButton.classList = 'remove-btn'
+    newTaskRemoveButton.classList = 'remove-btn  btns-remove-styling'
     newTaskRemoveButton.innerHTML = 'Remove'
 
     newTaskRemoveButton.addEventListener('click' , ()=>{
@@ -32,6 +33,23 @@ const renderTasks = (tasks)=>{
         //remove the task from Html 
         newTaskContainer.remove()
     })
+     // edit the text of task
+    newTaskEditButton.addEventListener('click' , ()=>{
+       if(taskInputEle.value==''){
+        alert("you shoud telhas teze")
+        return;
+       }
+       newTaskPargraph.innerHTML = taskInputEle.value
+       tasks=tasks.map(ele=> {
+        if(ele.id==task.id){
+            ele.task = taskInputEle.value
+        }
+        return ele
+       }
+       
+       )
+       localStorage.setItem('tasks' , JSON.stringify(tasks))
+ })
 
     // append the task Elemets in the task Conteiner 
     newTaskContainer.appendChild(newTaskPargraph)
@@ -63,17 +81,17 @@ addTaskBtn.addEventListener('click' , ()=>{
 
     // create the Task Elements
     const newTaskContainer = document.createElement('div')
-    newTaskContainer.classList = 'task'
+    newTaskContainer.classList = 'task '
 
     const newTaskPargraph = document.createElement('p')
     newTaskPargraph.innerHTML = taskInputEle.value
 
     const newTaskEditButton = document.createElement('button')
-    newTaskEditButton.classList = 'edit-btn'
+    newTaskEditButton.classList = 'edit-btn btns-edit-styling'
     newTaskEditButton.innerHTML = 'Edit'
 
     const newTaskRemoveButton = document.createElement('button')
-    newTaskRemoveButton.classList = 'remove-btn'
+    newTaskRemoveButton.classList = 'remove-btn btns-remove-styling'
     newTaskRemoveButton.innerHTML = 'Remove'
 
     newTaskRemoveButton.addEventListener('click' , ()=>{
@@ -85,11 +103,23 @@ addTaskBtn.addEventListener('click' , ()=>{
     }
     
   )
-//  newTaskEditButton.addEventListener('click' , ()=>{
-//     newTaskPargraph.innerHTML = taskInputEle.value
-//  }
-
-//  )
+  // edit the text of task
+  newTaskEditButton.addEventListener('click' , ()=>{
+    if(taskInputEle.value==''){
+        alert("you shoud telhas teze")
+        return;
+    }
+    newTaskPargraph.innerHTML = taskInputEle.value
+    tasks=tasks.map(ele=> {
+     if(ele.id==taskID){
+         ele.task = taskInputEle.value
+     }
+     return ele
+    }
+    
+    )
+    localStorage.setItem('tasks' , JSON.stringify(tasks))
+})
 
 
     // append the task Elemets in the task Conteiner 
@@ -107,7 +137,7 @@ addTaskBtn.addEventListener('click' , ()=>{
             task: taskInputEle.value})
     localStorage.setItem('tasks', JSON.stringify(tasks))
     console.log('tasks: ', tasks);
-     alert('To Do Item Listed Successfully !')
+   //  alert('To Do Item Listed Successfully !')
 })
 
 //Bayan Task is Create the Edit Functionality Without Fucking ChatGPT
